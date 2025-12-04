@@ -11,6 +11,8 @@
   Routes will have our different Routes
   Controller will have fn(); of those routes
 - Created SignIn, Login, Logout fn(); in authController
+- Created Config folder for db file which has MONGODB connection URI
+- Go to Mongo DB Atlas created new project and cluster get connection string from there
 
 # Feature
 
