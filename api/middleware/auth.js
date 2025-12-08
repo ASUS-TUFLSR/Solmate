@@ -27,9 +27,17 @@ export const protectRoute = async (req, res, next) => {
         next();
     } catch (error) {
         console.log("Error in auth middleware: ", error);
-        return res.status(500).json({
-            success: false,
-            message: "Not Authorized"
-        })
+
+        if(error instanceof jwt.JsonWebTokenError){
+            return res.status(401).json({
+                success: false,
+                message: "Not Authorized - Invalid Token"
+            });
+        }else{
+             return res.status(500).json({
+                success: false,
+                message: "Internal Server Error"
+            });
+        }
     }
 }
