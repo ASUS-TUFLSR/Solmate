@@ -15,6 +15,9 @@
 - Go to Mongo DB Atlas created new project and cluster get connection string from there
 - Created User Schema and Model with hashPassword
 - SignUp, Login, Logout fn() created, will test in PostMan now
+- Go to Cloudinary signup create api keys and  get =>
+                                            - Cloudinart => Cloud Name, API, SECRET
+- Create cloudinary.js and userController
 
 # Feature
 
