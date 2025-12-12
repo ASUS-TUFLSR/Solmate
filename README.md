@@ -19,6 +19,8 @@
                                             - Cloudinart => Cloud Name, API, SECRET
 - Create cloudinary.js and userController
 - Created MatchController are match Routes
+- Created Message Model & Schema
+- Created MessgeRoutes Send & Get Convo's in messageController
 
 # Feature
 

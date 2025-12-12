@@ -61,8 +61,7 @@ export const signup = async (req, res) => {
         console.log("Error in SignUp Controller", error);
         res.status(500).json({success: false, message: "Server error"});
     }
-}
-
+};
 
 export const login = async (req, res) => {
     try {
@@ -102,10 +101,10 @@ export const login = async (req, res) => {
         console.log("Error in Login Controller", error);
         res.status(500).json({success: false, message: "Server error"});
     }
-}
+};
 
 export const logout = async (req, res) => {
     res.clearCookie("jwt");
     res.status(200).json({success: true, message: "Logged Out Successfully"})
-}
+};
 
