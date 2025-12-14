@@ -21,6 +21,8 @@
 - Created MatchController are match Routes
 - Created Message Model & Schema
 - Created MessgeRoutes Send & Get Convo's in messageController
+- Initialized Frontend Of Solmate with vite and installed TailwindCSS
+- Created HomePage, AuthPage, ProfilePage, ChatPage
 
 # Feature
 
