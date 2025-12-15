@@ -23,6 +23,7 @@
 - Created MessgeRoutes Send & Get Convo's in messageController
 - Initialized Frontend Of Solmate with vite and installed TailwindCSS
 - Created HomePage, AuthPage, ProfilePage, ChatPage
+- Created Fn(); in AuthPage & SignUpForm/LoginForm fn();
 
 # Feature
 

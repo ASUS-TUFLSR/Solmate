@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import AuthPage from "./pages/AuthPage";
-import ProfilePage from "./pages/ProfilePage";
-import ChatPage from "./pages/ChatPage";
+import HomePage from "./Pages/HomePage";
+import AuthPage from  "./Pages/AuthPage"
+import ProfilePage from "./Pages/ProfilePage";
+import ChatPage from "./Pages/ChatPage";
 import { Toaster } from "react-hot-toast";
 
 function App() {
