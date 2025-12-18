@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useAuthStore } from '../store/useAuthStore';
 
 const SignUpForm = () => {
     const [name, setName] = useState("");
@@ -8,17 +9,14 @@ const SignUpForm = () => {
 	const [age, setAge] = useState("");
 	const [genderPreference, setGenderPreference] = useState("");
 
-	const { loading } = false;
-
-  const signup = () => {
-    alert("SignUp");
-  }
+	const { signup, loading } = useAuthStore();
+ 
 
 	return (
 	  <form className='space-y-6'
         onSubmit={(e) => {
         e.preventDefault();
-        signup();
+        signup({name, email, age, password, gender, genderPreference});
       }}
       >
 			{/* NAME */}
@@ -160,20 +158,6 @@ const SignUpForm = () => {
 						/>
 						<label htmlFor='prefer-female' className='ml-2 block text-sm text-gray-900'>
 							Female
-						</label>
-					</div>
-					<div className='flex items-center'>
-						<input
-							id='prefer-both'
-							name='gender-preference'
-							type='radio'
-							value='both'
-							checked={genderPreference === "both"}
-							onChange={(e) => setGenderPreference(e.target.value)}
-							className='h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300'
-						/>
-						<label htmlFor='prefer-both' className='ml-2 block text-sm text-gray-900'>
-							Both
 						</label>
 					</div>
 				</div>
