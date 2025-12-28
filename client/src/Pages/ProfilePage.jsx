@@ -22,24 +22,36 @@ const ProfilePage = () => {
     updateProfile({name, bio, age, gender, genderPreference, image});
   }
 
-  const handleImageChange = (e) => {
-		const file = e.target.files[0];
-		if (file) {
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				setImage(reader.result);
-			};
+  const handleImageChange = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
 
-			reader.readAsDataURL(file);
-		}
-	};
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "solmate_profile"); // create this preset
 
-	console.log(image);
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/djalu0nhc/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const data = await res.json();
+    setImage(data.secure_url); // ✅ URL, not base64
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
 
   return (
     <div className='min-h-screen bg-gray-50 flex flex-col' >
       <Header/>
-     <div className='flex-grow flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8'>
+     <div className='grow flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8'>
 				<div className='sm:mx-auto sm:w-full sm:max-w-md'>
 					<h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>Your Profile</h2>
 				</div>
