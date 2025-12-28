@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react'
-import useAuthStore from "../store/useAuthStore"
+import React, { useEffect, useRef, useState } from 'react'
+import {useAuthStore} from "../store/useAuthStore"
 import {Link} from "react-router-dom"
 import {Flame, User, LogOut, Menu} from "lucide-react"
 
@@ -10,6 +10,18 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const dropDownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if(dropDownRef.current && !dropDownRef.current.contains(event.target)){
+        setDropDownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
 
 
   return (
