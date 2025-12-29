@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Heart, Loader, MessageCircle, X} from "lucide-react"
 import {Link} from "react-router-dom"
+import { useMatchStore } from '../store/useMatchStore';
 
 
 const Sidebar = () => {
@@ -8,8 +9,11 @@ const Sidebar = () => {
 
    const toggleSidebar = () => setIsOpen(!isOpen);
 
-   const loading = false;
-   const matches = [{_id:"1", name: "Siya"}];
+   const {getMyMatches, IsLoadingMyMatches, matches} = useMatchStore();
+
+   useEffect(() => {
+    getMyMatches();
+   }, [getMyMatches])
 
     return (
         <>
@@ -32,7 +36,7 @@ const Sidebar = () => {
 					</div>
 
                     <div className='grow overflow-y-auto p-4 z-10 relative' >
-                      {loading ? <LoadingState/> : matches.length === 0 ? <NoMatchesFound/> : (
+                      {IsLoadingMyMatches ? <LoadingState/> : matches.length === 0 ? <NoMatchesFound/> : (
                         matches.map(match => (
                             <Link key={match._id} to={`/chat/${match._id}`} >
                                 <div className='flex items-center mb-4 cursor-pointer hover:bg-pink-50 p-2 rounded-lg transition-colors duration-300' >
