@@ -38,7 +38,7 @@ export const useMatchStore = create((set) => ({
     swipeLeft: async (user) => {
         try {
             set({swipeFeedback: "passed"});
-            await axiosInstance.post("/matches/swipe-left" + user._id);
+            await axiosInstance.post("/matches/swipe-left/" + user._id);
         } catch (error) {
             console.log(error)
             toast.error("Failed To Swipe Left");
@@ -50,7 +50,7 @@ export const useMatchStore = create((set) => ({
     swipeRight: async (user) => {
         try {
             set({swipeFeedback: "liked"});
-            await axiosInstance.post("/matches/swipe-right" + user._id);
+            await axiosInstance.post("/matches/swipe-right/" + user._id);
         } catch (error) {
             console.log(error)
             toast.error("Failed To Swipe Right");
