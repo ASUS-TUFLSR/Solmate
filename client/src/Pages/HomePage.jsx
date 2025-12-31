@@ -3,6 +3,8 @@ import Sidebar from '../components/Sidebar'
 import Header from "../components/Header"
 import { useMatchStore } from '../store/useMatchStore'
 import { Frown } from 'lucide-react'
+import SwipeArea from '../components/SwipeArea'
+import SwipeFeedback from '../components/SwipeFeedback'
 
 const HomePage = () => {
   
@@ -24,7 +26,8 @@ const HomePage = () => {
       <main className='grow flex flex-col gap-10 justify-center items-center p-4 relative overflow-hidden' >
         {userProfiles.length > 0 && !IsLoadingUserProfiles && (
           <>
-          Users Found
+          <SwipeArea/>
+          <SwipeFeedback/>
           </>
         )}
 

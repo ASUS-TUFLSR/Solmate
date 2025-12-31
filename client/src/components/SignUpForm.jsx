@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { useAuthStore } from '../store/useAuthStore';
+import { useState } from "react";
+import { useAuthStore } from "../store/useAuthStore";
 
 const SignUpForm = () => {
-    const [name, setName] = useState("");
+	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [gender, setGender] = useState("");
@@ -10,15 +10,15 @@ const SignUpForm = () => {
 	const [genderPreference, setGenderPreference] = useState("");
 
 	const { signup, loading } = useAuthStore();
- 
 
 	return (
-	  <form className='space-y-6'
-        onSubmit={(e) => {
-        e.preventDefault();
-        signup({name, email, age, password, gender, genderPreference});
-      }}
-      >
+		<form
+			className='space-y-6'
+			onSubmit={(e) => {
+				e.preventDefault();
+				signup({ name, email, password, gender, age, genderPreference });
+			}}
+		>
 			{/* NAME */}
 			<div>
 				<label htmlFor='name' className='block text-sm font-medium text-gray-700'>
@@ -32,7 +32,7 @@ const SignUpForm = () => {
 						required
 						value={name}
 						onChange={(e) => setName(e.target.value)}
-						className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm'
+						className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-black text-black focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm'
 					/>
 				</div>
 			</div>
@@ -51,7 +51,7 @@ const SignUpForm = () => {
 						required
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
-						className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm'
+						className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-black text-black focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm'
 					/>
 				</div>
 			</div>
@@ -70,7 +70,7 @@ const SignUpForm = () => {
 						required
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
-						className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm'
+						className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-black text-black focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm'
 					/>
 				</div>
 			</div>
@@ -90,43 +90,44 @@ const SignUpForm = () => {
 						onChange={(e) => setAge(e.target.value)}
 						min='18'
 						max='120'
-						className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm'
+						className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-black text-black focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm'
 					/>
 				</div>
 			</div>
 
 			{/* GENDER */}
-			<div>
-				<label className='block text-sm font-medium text-gray-700'>Your Gender</label>
-				<div className='mt-2 flex gap-2'>
-					<div className='flex items-center'>
-						<input
-							id='male'
-							name='gender'
-							type='checkbox'
-							checked={gender === "male"}
-							onChange={() => setGender("male")}
-							className='h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded'
-						/>
-						<label htmlFor='male' className='ml-2 block text-sm text-gray-900'>
-							Male
-						</label>
-					</div>
-					<div className='flex items-center'>
-						<input
-							id='female'
-							name='gender'
-							type='checkbox'
-							checked={gender === "female"}
-							onChange={() => setGender("female")}
-							className='h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded'
-						/>
-						<label htmlFor='female' className='ml-2 block text-sm text-gray-900'>
-							Female
-						</label>
-					</div>
-				</div>
-			</div>
+			
+<div>
+  <label className="block text-sm font-medium text-gray-900">
+    Your Gender
+  </label>
+
+  <div className="mt-2 flex gap-4">
+    <label className="flex items-center gap-2">
+      <input
+        type="radio"
+        name="gender"
+        value="male"
+        checked={gender === "male"}
+        onChange={(e) => setGender(e.target.value)}
+        className="h-4 w-4 "
+      />
+      <span className="text-gray-900">Male</span>
+    </label>
+
+    <label className="flex items-center gap-2">
+      <input
+        type="radio"
+        name="gender"
+        value="female"
+        checked={gender === "female"}
+        onChange={(e) => setGender(e.target.value)}
+        className="h-4 w-4 text-pink-600"
+      />
+      <span className="text-gray-900">Female</span>
+    </label>
+  </div>
+</div>
 
 			{/* GENDER PREFERENCE */}
 			<div>
@@ -177,7 +178,6 @@ const SignUpForm = () => {
 				</button>
 			</div>
 		</form>
-  )
-}
-
-export default SignUpForm
+	);
+};
+export default SignUpForm;
