@@ -24,6 +24,7 @@
 - Initialized Frontend Of Solmate with vite and installed TailwindCSS
 - Created HomePage, AuthPage, ProfilePage, ChatPage
 - Created Fn(); in AuthPage & SignUpForm/LoginForm fn();
+- Card Swipe Fn() working in Home Page & Created Socket.client and Socket.server for rtc
 
 # Feature
 

@@ -8,16 +8,21 @@ import matchRoutes from "./routes/matchRoutes.js"
 import messageRoutes from "./routes/messageRoutes.js"
 import { connectDB } from "./config/db.js";
 import cors from "cors"
+import {createServer} from "http"
+import { initializeSocket } from "./socket/socket.server..js";
 
 dotenv.config();
 
 const app = express();
+const httpServer = createServer(app)
 const PORT = process.env.PORT || 5000;
+
+initializeSocket(httpServer);
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     credentials: true,
 }));
 
@@ -30,7 +35,7 @@ app.use("/api/messages", messageRoutes);
 //     res.send("Server is Live");
 // });
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
     connectDB();
 })
