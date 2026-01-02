@@ -1,4 +1,5 @@
 import User from "../models/User.js"
+import {getConnectedUser, getIO} from "../socket/socket.server..js"
 
 export const swipeRight = async (req, res) => {
 
@@ -17,19 +18,41 @@ export const swipeRight = async (req, res) => {
         if(!currentUser.likes.includes(likedUserId)){
             currentUser.likes.push(likedUserId);
             await currentUser.save();
-        }
+        
 
-        if(likedUser.likes.includes(currentUser.id)){
+         if(likedUser.likes.includes(currentUser.id)){
             currentUser.matches.push(likedUserId);
             likedUser.matches.push(currentUser.id);
             
-            // Saving both at the same time
-           //TODO: Notify the user if a match happens => rtc SOCKET.IO         
+            // send notification in real-time with socket.io      
             await Promise.all([
                 await currentUser.save(),
                 await likedUser.save()
-            ])
-        }
+            ]);
+
+            const connectedUsers = getConnectedUser();
+            const io = getIO();
+
+            const likedUserSocketId = connectedUsers.get(likedUserId);
+            if(likedUserSocketId) {
+                io.to(likedUserSocketId).emit("newMatch", {
+                    _id: currentUser._Id,
+                    name: currentUser.name,
+                    image: currentUser.image,
+                });
+            }
+
+            const currentSocketId = connectedUsers.get(currentUser._id.toString());
+            if(currentSocketId){
+                io.to(currentSocketId).emit("newMatch", {
+                    _id: likedUser._Id,
+                    name: likedUser.name,
+                    image: likedUser.image, 
+                });
+            }
+
+         }
+       }
 
         res.status(200).json({
             success: true,
