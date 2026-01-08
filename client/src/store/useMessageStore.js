@@ -8,26 +8,44 @@ export const useMessageStore = create((set) => ({
     messages: [],
     loading: true,
 
-    sendMessage: async (recieverId, content) => {
-        try {
-            set(state => ({
-                messages: [...state.messages, {
-                    sender: useAuthStore.getState().authUser._id,
-                    content
-                }]
-            }))
-            const res = await axiosInstance.post("/messages/send", {recieverId, content});
-            console.log("Message Sent", res.data);
-        } catch (error) {
-            toast.error(error.response.data.message || "Oop's something went wrong");
-        }
-    },
+  sendMessage: async (receiverId, content) => {
+	const authUser = useAuthStore.getState().authUser;
+
+	if (!authUser) {
+		toast.error("You must be logged in to send messages");
+		return;
+	}
+
+	try {
+		set((state) => ({
+				messages: [
+					...state.messages,
+					{ _id: Date.now(), sender: useAuthStore.getState().authUser._id, content },
+				],
+			}));
+
+		await axiosInstance.post("/messages/send", {
+			recieverId: receiverId,
+			content,
+		});
+	} catch (error) {
+		
+		toast.error(
+			error?.response?.data?.message ||
+			error?.message ||
+			"Message failed to send"
+		);
+	}
+},
+
+
 
     getMessages: async (userId) => {
         try {
             set({loading: true});
             const res = await axiosInstance.get(`/messages/conversation/${userId}`);
-            set({messages: res.data.messages});
+            set({messages: res.data.message});
+			console.log("Fetched messages:", res.data);
         } catch (error) {
             console.log(error);
             set({messages: []});
@@ -35,20 +53,24 @@ export const useMessageStore = create((set) => ({
             set({loading: false});
         }
     },
-
     subscribeToMessage: () => {
-        const socket = getSocket();
-        socket.on("newMessage", ({message}) => {
-            set(state => ({
-                messages: [...state.messages, message]
-            }));
-        })
-        
-    },
+	const socket = getSocket();
+	if (!socket) return;
+
+	socket.on("newMessage", ({ message }) => {
+		set((state) => ({
+			messages: [
+				...(Array.isArray(state.messages) ? state.messages : [])
+					.filter((m) => !m.optimistic),
+				message,
+			],
+		}));
+	});
+},
+
 
     unsubscribeFromMessage: () => {
         const socket = getSocket();
         socket.off("newMessage");
-    }
-
+    },
 }))
