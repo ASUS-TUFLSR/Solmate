@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 let io;
 
 const connectedUsers = new Map();
+const onlineUsers = new Set();
 
 export const initializeSocket = (httpServer) => {
 
@@ -22,14 +23,23 @@ export const initializeSocket = (httpServer) => {
     })
 
     io.on("connection", (socket) => {
-        console.log(`User connected with socket id: ${socket.id}`);
-        connectedUsers.set(socket.userId, socket.id);
+	const userId = socket.userId;
 
-        socket.on("disconnect", () => {
-            console.log(`User disconnected with socket.id: ${socket.id}`);
-            connectedUsers.delete(socket.userId)
-        })
-    })
+	onlineUsers.add(userId);
+	console.log("User connected:", userId);
+
+	connectedUsers.set(userId, socket.id);
+
+	io.emit("onlineUsers", Array.from(onlineUsers));
+
+	socket.on("disconnect", () => {
+		onlineUsers.delete(userId);
+		console.log("User disconnected:", userId);
+
+		connectedUsers.delete(userId);
+		io.emit("onlineUsers", Array.from(onlineUsers));
+	});
+});
 
 }
 

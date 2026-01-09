@@ -14,13 +14,8 @@ export const initializeSocket = (userId) => {
     })
 };
 
-export const getSocket = () => {
-    if(!socket){
-        throw new Error("Socket no initialized");
-    }
+export const getSocket = () => socket;
 
-    return socket;
-}
 
 export const disconnectSocket = () => {
     if(socket){

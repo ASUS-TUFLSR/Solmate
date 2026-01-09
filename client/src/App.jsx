@@ -5,6 +5,7 @@ import ProfilePage from "./Pages/ProfilePage";
 import ChatPage from "./Pages/ChatPage";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/useAuthStore";
+import { useOnlineStore } from "./store/useOnlineStore";
 import { useEffect } from "react";
 
 function App() {
@@ -13,6 +14,16 @@ const {checkAuth, authUser, checkingAuth} = useAuthStore();
   useEffect(() => {
    checkAuth()
   }, [checkAuth]);
+
+  useEffect(() => {
+	if (authUser) {
+		useOnlineStore.getState().subscribeToOnlineUsers();
+	}
+
+	return () => {
+		useOnlineStore.getState().unsubscribeFromOnlineUsers();
+	};
+  }, [authUser])
 
   if(checkingAuth) return null;
 
