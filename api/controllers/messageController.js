@@ -11,7 +11,6 @@ export const sendMessage = async (req, res) => {
             content
         });
 
-        //TODO: send message in real-time => SOCKET.IO
         const io = getIO();
         const connectedUsers = getConnectedUser();
         const recieverSocketId = connectedUsers.get(recieverId);
